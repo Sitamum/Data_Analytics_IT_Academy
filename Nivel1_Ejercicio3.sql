@@ -4,7 +4,7 @@ select * from transaction
 where company_id in
 	(select id
 	from company
-	where country = "germany")
+	where country = "Germany")
 
 -- Lista de empresas que han realizado transacciones superiores--
 -- a la media de todas las transacciones--
@@ -14,8 +14,7 @@ where id in (
 	from transaction
 	where amount >
 			(select avg(amount) 
-		from transaction)
-);
+		from transaction));
 
 -- Eliminar las empresas que no tienen transacciones--
 -- listado de empresas eliminadas--
