@@ -6,10 +6,10 @@
 -- Mostra el llistat aplicant solament subconsultes.
 
 -- utilizando subconsultas
-SELECT id, date(timestamp) as  Fecha, amount FROM transaction
+SELECT date(timestamp) as  Fecha, sum(amount) as Ingresos FROM transaction
     WHERE declined= 0
-    GROUP BY id, Fecha, amount
-    ORDER BY sum(amount) DESC
+    GROUP BY Fecha
+    ORDER BY Ingresos DESC
     LIMIT 5;
 -- utilizando Join
 SELECT DATE(Timestamp) as Fecha, sum(amount) as Ventas 
@@ -41,16 +41,20 @@ WHERE transaction.company_id = company.id AND DECLINED=0
 -- EJERCICIO 3
 -- Listado de las transacciones realizadas en el mismo pais que ‘Non Institute’ --
 --Utilizando subqueries
-SELECT transaction.id, amount, company_name, country FROM transaction, company
-	WHERE 
-		transaction.company_id = company.id and 
-        Country = (select distinct country from company where company_name = "Non Institute") and
-        company_name <> "Non Institute";
+select * from transaction
+where company_id in
+    (select id from company
+    where country=
+	    (select distinct country 
+		   from company 
+           where company_name = "Non Institute") 
+           
+    and company_name <> "Non Institute");
 
 -- utilizando join
 SELECT transaction.id, amount, company_name, country 
 FROM transaction
 join company
-ON transaction.company_id = company.id and 
-        Country = (select distinct country from company where company_name = "Non Institute") and
+ON transaction.company_id = company.id
+WHERE Country = (select distinct country from company where company_name = "Non Institute") and
         company_name <> "Non Institute";
