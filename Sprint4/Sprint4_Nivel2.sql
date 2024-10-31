@@ -1,0 +1,4 @@
+-- Crea una nova taula que reflecteixi l'estat de les targetes de crèdit basat en si 
+-- les últimes tres transaccions van ser declinades i genera la següent consulta:
+-- Exercici 1
+-- Quantes targetes estan actives?
